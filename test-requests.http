@@ -1,5 +1,2 @@
 GET http://localhost:7071/api/BookRoom?RoomNumber=124
-
-###
-
-GET http://localhost:7071/runtime/webhooks/durabletask/instances/orch.124?taskHub=TestHubName&connection=Storage&code=4lzwfT5HrKH09Y1aVvbJ0/7JxhfXMbaBnCOE/lxsdYF5loEz9JZuTg==
+ 
