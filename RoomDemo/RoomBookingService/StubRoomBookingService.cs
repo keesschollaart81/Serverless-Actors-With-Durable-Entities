@@ -8,5 +8,15 @@ namespace RoomDemo.RoomBookingService
         {
             return Task.CompletedTask;
         }
+
+        public Task<bool> IsRoomBookedAsync(string roomNumber)
+        {
+            return Task.FromResult(roomNumber == "123");
+        }
+
+        public Task InformAttendeeAsync(string attendee)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
