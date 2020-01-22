@@ -1,1 +1,1 @@
-http://localhost:7071/api/GetRoomDetails?RoomNumber=123
+http://localhost:7071/api/BookRoom?RoomNumber=124

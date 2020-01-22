@@ -17,8 +17,8 @@ namespace RoomDemo
             _roomBookingService = roomBookingService;
         }
 
-        [FunctionName(nameof(GetRoomDetails))]
-        public async Task<IActionResult> GetRoomDetails(
+        [FunctionName(nameof(BookRoom))]
+        public async Task<IActionResult> BookRoom(
             [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
             ILogger log)
         {
