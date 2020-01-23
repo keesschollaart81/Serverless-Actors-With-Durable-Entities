@@ -4,23 +4,13 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using RoomDemo.RoomBookingService;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RoomDemo
 {
     public class RoomFunctions
-    {
-        private readonly IRoomBookingService _roomBookingService;
-
-        public RoomFunctions(IRoomBookingService roomBookingService)
-        {
-            _roomBookingService = roomBookingService;
-        }
-
+    { 
         [FunctionName(nameof(ChangeBookedRoom))]
         public async Task<IActionResult> ChangeBookedRoom(
          [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
