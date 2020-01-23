@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace RoomDemo
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class RoomEntity
+    public class RoomEntity : IRoomEntity
     {
         [JsonProperty]
         public string RoomNumber { get; set; }
@@ -32,15 +32,25 @@ namespace RoomDemo
         }
 
 
-        public Task<bool> IsRoomBookedAsync()
+        public Task<string> GetAttendeeInfoAsync(string username)
         {
-            var isBooked = RoomNumber == "123";
-            return Task.FromResult(isBooked);
+            return Task.FromResult(username.ToUpper());
         }
-        
-        public Task BookRoomAsync(string roomNumber)
+
+        public Task BookRoomAsync()
         {
             IsBooked = true;
+            return Task.CompletedTask;
+        }
+
+        public Task<bool> IsCurrentlyBookedAsync()
+        {
+            return Task.FromResult(IsBooked);
+        }
+
+        public Task UnBookRoomAsync()
+        {
+            IsBooked = false;
             return Task.CompletedTask;
         }
     }
