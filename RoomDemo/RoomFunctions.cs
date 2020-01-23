@@ -60,7 +60,7 @@ namespace RoomDemo
             var informAttendeesTasks = new List<Task>();
             foreach (var attendee in new string[] { "jan", "kees", "piet" })
             {
-                var task = context.CallActivityAsync<bool>(nameof(IsRoomBooked), attendee);
+                var task = context.CallActivityAsync<bool>(nameof(InformAttendee), attendee);
                 informAttendeesTasks.Add(task);
             }
             await Task.WhenAll(informAttendeesTasks);
