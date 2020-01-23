@@ -24,7 +24,6 @@ namespace RoomDemo
         [FunctionName(nameof(ChangeBookedRoom))]
         public async Task<IActionResult> ChangeBookedRoom(
          [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
-         [DurableClient] IDurableEntityClient durableEntityClient,
          [DurableClient] IDurableOrchestrationClient durableOrchestrationClient,
          ILogger log)
         {
