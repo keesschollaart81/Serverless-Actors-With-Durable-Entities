@@ -18,8 +18,8 @@ namespace RoomDemo
         public RoomFunctions(IRoomBookingService roomBookingService)
         {
             _roomBookingService = roomBookingService;
-        }
-
+        } 
+        
         [FunctionName(nameof(BookRoom))]
         public async Task<IActionResult> BookRoom(
             [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
@@ -28,18 +28,18 @@ namespace RoomDemo
         {
             var roomNumber = req.Query["RoomNumber"];
             var entityId = new EntityId(nameof(RoomEntity), roomNumber);
-            
+
             log.LogInformation("Got room booking request for room {roomNumber}", roomNumber);
 
             var roomEntity = await durableEntityClient.ReadEntityStateAsync<RoomEntity>(entityId);
-            if(roomEntity.EntityExists && roomEntity.EntityState.IsBooked)
+            if (roomEntity.EntityExists && roomEntity.EntityState.IsBooked)
             {
                 throw new Exception("Room already booked");
             }
-             
+
             await durableEntityClient.SignalEntityAsync(entityId, nameof(RoomEntity.BookRoomAsync));
 
             return new OkObjectResult("Room booked");
-        }  
+        }
     }
 }
