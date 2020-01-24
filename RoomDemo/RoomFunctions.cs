@@ -29,7 +29,7 @@ namespace RoomDemo
             var roomNumber = req.Query["RoomNumber"];
             log.LogInformation("Got room booking request for room {roomNumber}", roomNumber);
 
-            var orchestrationId = await durableOrchestrationClient.StartNewAsync(nameof(BookRoomOrchestrator), $"orch.{roomNumber}", new BookRoomOrchestratorInput(roomNumber));
+            var orchestrationId = await durableOrchestrationClient.StartNewAsync(nameof(BookRoomOrchestrator), new BookRoomOrchestratorInput(roomNumber));
 
             return durableOrchestrationClient.CreateCheckStatusResponse(req, orchestrationId);
         }
