@@ -5,7 +5,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using System;
 
 namespace RoomDemo
 {
@@ -13,16 +12,16 @@ namespace RoomDemo
     { 
         [FunctionName(nameof(ChangeBookedRoom))]
         public async Task<IActionResult> ChangeBookedRoom(
-         [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
-         [DurableClient] IDurableOrchestrationClient durableOrchestrationClient,
-         ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req,
+            [DurableClient] IDurableOrchestrationClient durableOrchestrationClient,
+            ILogger log)
         {
             var fromRoomNumber = req.Query["FromRoomNumber"];
             var toRoomNumber = req.Query["ToRoomNumber"]; 
 
             log.LogInformation("Got room booking change request for room {fromRoomNumber} to room {toRoomNumber}", fromRoomNumber, toRoomNumber);
 
-            var orchestrationId = await durableOrchestrationClient.StartNewAsync(nameof(ChangeBookedRoomOrchestrator), $"orch.{fromRoomNumber}.{toRoomNumber}", new ChangeRoomOrchestratorInput(fromRoomNumber, toRoomNumber));
+            var orchestrationId = await durableOrchestrationClient.StartNewAsync(nameof(ChangeBookedRoomOrchestrator), new ChangeRoomOrchestratorInput(fromRoomNumber, toRoomNumber));
 
             return durableOrchestrationClient.CreateCheckStatusResponse(req, orchestrationId);
         }
