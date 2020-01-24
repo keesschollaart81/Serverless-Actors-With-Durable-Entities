@@ -28,7 +28,7 @@ namespace RoomDemo
         }
 
         [FunctionName(nameof(ChangeBookedRoomOrchestrator))]
-        public async Task<string> ChangeBookedRoomOrchestrator(
+        public async Task<OrchestrationResult> ChangeBookedRoomOrchestrator(
             [OrchestrationTrigger] IDurableOrchestrationContext context,
             ILogger log)
         {
@@ -51,14 +51,14 @@ namespace RoomDemo
                 var toRoomIsCurrentlyBooked = await fromRoomEntityProxy.IsCurrentlyBookedAsync();
                 if (toRoomIsCurrentlyBooked)
                 {
-                    throw new Exception("Cannot change as to-room is already booked");
+                    return new OrchestrationResult(false, "Room already booked!");
                 }
 
                 await fromRoomEntityProxy.UnBookRoomAsync();
                 await toRoomEntityProxy.BookRoomAsync();
             }
 
-            return "Room booking changed!";
+            return new OrchestrationResult(true, "Room booked!");
         }
 
         public class ChangeRoomOrchestratorInput
@@ -75,6 +75,23 @@ namespace RoomDemo
             {
                 FromRoomNumber = fromRoomNumber;
                 ToRoomNumber = toRoomNumber;
+            }
+        }
+
+        public class OrchestrationResult
+        {
+            public bool Success { get; set; }
+            public string Message { get; set; }
+
+            public OrchestrationResult()
+            {
+
+            }
+
+            public OrchestrationResult(bool success = true, string message="")
+            {
+                Success = success;
+                Message = message;
             }
         }
     }
